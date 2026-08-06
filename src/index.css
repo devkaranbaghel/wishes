@@ -1,0 +1,726 @@
+/* =====================================================
+   BIRTHDAY JOURNAL — GLOBAL STYLES
+   Integrates journal-page.css flip pattern
+===================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --cream: #F5F1E8;
+  --warm-brown: #8B7355;
+  --warm-brown-dark: #6B5940;
+  --sage: #6B8E5E;
+  --slate: #4A5568;
+  --sky: #87CEEB;
+  --night: #0d0d1a;
+  --gold: #C9A84C;
+  --gold-light: #F0C96A;
+  --parchment: #FFFAF0;
+  --ink: #2C2416;
+}
+
+html { scroll-behavior: auto; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: #0d0d1a;
+  color: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── INTRO SCENE ── */
+.intro-scene {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 60%, #1a0a2e 0%, #000 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  z-index: 1000;
+}
+
+.intro-title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: #e8d5b7;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* Cake */
+.cake-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+.candle {
+  width: 10px;
+  height: 36px;
+  background: linear-gradient(to bottom, #f9e2a0, #e8c84c);
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  flex-shrink: 0;
+}
+.flame {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 20px;
+}
+.flame-inner {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 100%, #ff6b00, #ffcc00 40%, #fff 100%);
+  border-radius: 50% 50% 30% 30%;
+  animation: flicker 0.4s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+@keyframes flicker {
+  0%   { transform: scaleX(1)    scaleY(1)    rotate(-2deg); opacity: 1; }
+  33%  { transform: scaleX(0.9)  scaleY(1.05) rotate(1deg);  opacity: 0.95; }
+  66%  { transform: scaleX(1.1)  scaleY(0.95) rotate(-1deg); opacity: 1; }
+  100% { transform: scaleX(0.95) scaleY(1.08) rotate(2deg);  opacity: 0.9; }
+}
+.smoke-particle {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 6px; height: 6px;
+  background: rgba(200,200,200,0.7);
+  border-radius: 50%;
+  animation: smoke-rise 1.2s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes smoke-rise {
+  0%   { transform: translateX(-50%) translateY(0) scale(0.5); opacity: 0.8; }
+  100% { transform: translateX(calc(-50% + var(--drift,0px))) translateY(-60px) scale(2); opacity: 0; }
+}
+.cake-base { width: 180px; display: flex; flex-direction: column; }
+.cake-top {
+  background: linear-gradient(to bottom, #f8e1c4, #e8c8a0);
+  height: 60px;
+  border-radius: 8px 8px 0 0;
+  position: relative; overflow: hidden;
+  border: 2px solid #c9a070; border-bottom: none;
+}
+.cake-top::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 20px;
+  background: repeating-linear-gradient(90deg, #c85c8a 0px, #c85c8a 16px, #f8a4c4 16px, #f8a4c4 32px);
+  opacity: 0.6;
+}
+.frosting {
+  position: absolute; top: 0; left: 0; right: 0; height: 14px;
+  background: white;
+  clip-path: polygon(0 0,5% 0,10% 100%,15% 0,20% 0,25% 100%,30% 0,35% 0,40% 100%,45% 0,50% 0,55% 100%,60% 0,65% 0,70% 100%,75% 0,80% 0,85% 100%,90% 0,95% 0,100% 100%,100% 0);
+  z-index: 1;
+}
+.cake-middle {
+  background: linear-gradient(to bottom, #e8a0b4, #d47090);
+  height: 45px;
+  border: 2px solid #b05070; border-top: none; border-bottom: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.cake-bottom {
+  background: linear-gradient(to bottom, #f8e1c4, #e8c8a0);
+  height: 55px;
+  border-radius: 0 0 12px 12px;
+  border: 2px solid #c9a070; border-top: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.cake-text { font-family: 'Caveat', cursive; font-size: 0.9rem; color: #8B0000; font-weight: 700; }
+.blow-hint {
+  font-family: 'Caveat', cursive; font-size: 1.1rem;
+  color: rgba(220,200,160,0.8);
+  animation: pulse-hint 2s ease-in-out infinite;
+  cursor: pointer;
+}
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.03); }
+}
+
+/* Stars */
+.stars-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+.star-dot { position: absolute; background: white; border-radius: 50%; }
+
+/* ══════════════════════════════════════════════════
+   SCROLL SECTIONS
+══════════════════════════════════════════════════ */
+.scroll-section {
+  height: 350vh;
+  position: relative;
+}
+.scroll-section.single-page {
+  height: 100vh;
+}
+.sticky-journal {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════
+   JOURNAL PAGE WRAPPER — from journal-page.css
+   perspective: 1200px gives the 3D depth for the flip
+══════════════════════════════════════════════════ */
+.journal-page-wrapper {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* translateZ(0) prevents flickering on Webkit */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* ══════════════════════════════════════════════════
+   THE BOOK — two-page open spread
+   This is the container that holds the two pages.
+   Drop-shadow applied here (no overflow:hidden needed).
+══════════════════════════════════════════════════ */
+.book-spread {
+  display: flex;
+  width: min(1160px, 96vw);
+  height: min(680px, 86vh);
+  position: relative;
+  filter:
+    drop-shadow(0 30px 55px rgba(0,0,0,0.75))
+    drop-shadow(0 8px 18px rgba(0,0,0,0.50));
+}
+
+/* Book spine center shadow strip */
+.book-spine {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 6px;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, rgba(0,0,0,0.40), rgba(0,0,0,0.10), rgba(0,0,0,0.40));
+  z-index: 30;
+  pointer-events: none;
+}
+
+/* Page edge thickness strip (right side) */
+.page-edges {
+  position: absolute;
+  right: -7px;
+  top: 3px; bottom: 3px;
+  width: 10px;
+  background: linear-gradient(to right, #d8d0c0, #c0b8a8, #b0a898);
+  border-radius: 0 3px 3px 0;
+  z-index: 1;
+}
+.page-edges::before {
+  content: '';
+  position: absolute;
+  inset: 2px 2px 2px 0;
+  background: #c8c0b0;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ══════════════════════════════════════════════════
+   LEFT PAGE — always visible, never moves
+══════════════════════════════════════════════════ */
+.page-left-static {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px 0 0 8px;
+  /* Subtle left-page shadow at the spine */
+  box-shadow: inset -8px 0 20px rgba(0,0,0,0.12);
+}
+
+.page-left-static img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 200%;        /* full panoramic image anchored left */
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* Left page shadow cast by lifting right page */
+.left-page-shadow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.55) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ══════════════════════════════════════════════════
+   RIGHT PAGE WRAPPER — from journal-page.css pattern
+   .journal-page-wrapper > .journal-page (the flipping card)
+   .journal-page has transform-style: preserve-3d
+   .page-front and .page-back have backface-visibility: hidden
+══════════════════════════════════════════════════ */
+.right-page-wrapper {
+  width: 50%;
+  height: 100%;
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+}
+
+/* THE FLIPPING CARD — matches .journal-page from journal-page.css */
+.journal-page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  background: transparent;
+  transform-origin: left center;   /* flip around the spine */
+  will-change: transform;
+}
+
+/* ── FRONT FACE — right half of current chapter image ── */
+.page-front {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 0 8px 8px 0;
+  /* shadow matching journal-page.css */
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Subtle grid texture on front face — from journal-page.css */
+.page-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(200, 180, 150, 0.03) 2px,
+      rgba(200, 180, 150, 0.03) 4px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(200, 180, 150, 0.02) 2px,
+      rgba(200, 180, 150, 0.02) 4px
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Right edge shadow on front — from journal-page.css */
+.page-front::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 40px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.02) 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  border-radius: 0 8px 8px 0;
+  z-index: 2;
+}
+
+.page-front img {
+  position: absolute;
+  top: 0; left: -100%;   /* shift so right half of panoramic is shown */
+  width: 200%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+}
+
+/* Fold crease highlight at left edge (spine) */
+.fold-crease {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 12px;
+  background: linear-gradient(to right, rgba(255,255,255,0.75), rgba(255,255,255,0.15), transparent);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Curl shadow on front face */
+.curl-shadow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.30) 30%, transparent 70%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ── BACK FACE — left half of next chapter image ── */
+.page-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);     /* pre-rotated so it shows on back */
+  overflow: hidden;
+  border-radius: 0 8px 8px 0;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* From journal-page.css — back face texture */
+.page-back::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(200, 180, 150, 0.03) 2px,
+      rgba(200, 180, 150, 0.03) 4px
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Back face content container */
+.back-face-corrector {
+  position: absolute;
+  inset: 0;
+}
+
+.back-face-corrector img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 200%;         /* left half of next panoramic image */
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* Shadow on spine edge of back face */
+.back-spine-shadow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.55) 0%, transparent 60%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════
+   TEXT OVERLAYS
+   Text sits at the TOP of each page with dark-to-transparent gradient
+══════════════════════════════════════════════════ */
+.page-text-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.72) 0%,
+    rgba(0,0,0,0.42) 32%,
+    transparent 72%
+  );
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2.2rem 1rem;
+  gap: 0.5rem;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.txt-chapter-num {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  color: var(--gold-light);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.txt-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  color: #fff;
+  line-height: 1.2;
+  font-weight: 700;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+
+.txt-divider {
+  width: 50px; height: 2px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin: 0.2rem 0;
+}
+
+.txt-message {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(0.78rem, 1.3vw, 0.95rem);
+  color: rgba(245,241,232,0.9);
+  line-height: 1.65;
+  font-style: italic;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+.txt-note {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: var(--gold-light);
+  margin-top: 0.3rem;
+  opacity: 0.9;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* Bucket list */
+.bucket-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.3rem;
+}
+.bucket-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  color: rgba(245,241,232,0.95);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+.bucket-check {
+  width: 18px; height: 18px;
+  border: 1.5px solid rgba(240,201,106,0.7);
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.bucket-item.pending .bucket-check {
+  border-color: rgba(240,201,106,0.3);
+  color: transparent;
+}
+
+/* Right page: panel on the right side (note / bucket list) */
+.page-text-right {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.70) 0%,
+    rgba(0,0,0,0.38) 35%,
+    transparent 75%
+  );
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem 1rem;
+  gap: 0.5rem;
+  z-index: 3;
+  pointer-events: none;
+  border-left: 1px solid rgba(255,255,255,0.07);
+}
+
+/* ══════════════════════════════════════════════════
+   PAGE FLIP SHADOW — from journal-page.css
+══════════════════════════════════════════════════ */
+.journal-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -20px;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border-radius: 0 12px 12px 0;
+  transform-origin: right center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════════════════
+   COVER — single leather page
+══════════════════════════════════════════════════ */
+.cover-container {
+  width: 100%;
+  height: 100%;
+}
+
+.cover-page {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #3d2814 0%, #5c3d1e 30%, #4a2e14 60%, #2d1a08 100%);
+  border-radius: 4px 16px 16px 4px;
+  box-shadow:
+    -8px 0 20px rgba(0,0,0,0.6),
+    8px 4px 40px rgba(0,0,0,0.5),
+    inset -4px 0 12px rgba(0,0,0,0.4),
+    inset 0 0 60px rgba(139,90,30,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8rem;
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-page::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 4px 12px 12px 4px;
+  pointer-events: none;
+}
+
+.cover-page::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 28px;
+  background: linear-gradient(to right, #1a0c04 0%, #3d2010 60%, transparent 100%);
+  border-radius: 4px 0 0 4px;
+}
+
+.leather-texture {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.cover-compass { font-size: 4rem; animation: compass-spin 8s linear infinite; filter: drop-shadow(0 0 12px rgba(201,168,76,0.6)); }
+@keyframes compass-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.cover-title-small { font-family: 'Caveat', cursive; font-size: 1rem; color: var(--gold-light); letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.85; }
+.cover-title-main { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--cream); text-align: center; line-height: 1.2; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+.cover-subtitle { font-family: 'Caveat', cursive; font-size: 1.2rem; color: var(--gold-light); text-align: center; opacity: 0.9; }
+.cover-divider { width: 120px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+.cover-scroll-hint { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; font-family: 'Caveat', cursive; font-size: 0.95rem; color: rgba(245,241,232,0.5); animation: bounce-hint 2s ease-in-out infinite; position: absolute; bottom: 2rem; }
+@keyframes bounce-hint { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(6px); opacity: 0.9; } }
+
+/* ══════════════════════════════════════════════════
+   END PAGE
+══════════════════════════════════════════════════ */
+.end-container { width: 100%; height: 100%; }
+.end-page {
+  width: 100%; height: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+.end-image-full { width: 100%; height: 100%; object-fit: cover; display: block; }
+.end-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.75) 100%); }
+.end-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem; gap: 0.8rem; }
+.end-quote { font-family: 'Playfair Display', serif; font-size: clamp(0.85rem, 1.5vw, 1.05rem); color: rgba(245,241,232,0.9); font-style: italic; line-height: 1.6; text-shadow: 0 1px 6px rgba(0,0,0,0.7); }
+.end-birthday { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2rem); color: var(--gold-light); font-weight: 700; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
+.end-message { font-family: 'Caveat', cursive; font-size: clamp(0.9rem, 1.6vw, 1.1rem); color: rgba(245,241,232,0.8); line-height: 1.6; text-shadow: 0 1px 6px rgba(0,0,0,0.7); }
+.end-button {
+  margin-top: 1rem; padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  border: none; border-radius: 40px;
+  font-family: 'Caveat', cursive; font-size: 1.1rem; font-weight: 700; color: var(--ink);
+  cursor: pointer; width: fit-content;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.end-button:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 28px rgba(201,168,76,0.55); }
+
+/* Fireflies */
+.firefly {
+  position: fixed; width: 5px; height: 5px;
+  background: radial-gradient(circle, #ffffa0, #80ff00);
+  border-radius: 50%; pointer-events: none; z-index: 50;
+  animation: firefly-float var(--fly-dur,6s) ease-in-out infinite;
+  box-shadow: 0 0 6px 2px rgba(150,255,50,0.5);
+}
+@keyframes firefly-float {
+  0%   { transform: translate(0,0) scale(0.5); opacity: 0; }
+  20%  { opacity: 1; transform: translate(var(--dx1),var(--dy1)) scale(1); }
+  50%  { opacity: 0.3; transform: translate(var(--dx2),var(--dy2)) scale(0.8); }
+  80%  { opacity: 1; transform: translate(var(--dx3),var(--dy3)) scale(1); }
+  100% { transform: translate(0,0) scale(0.5); opacity: 0; }
+}
+
+/* UI chrome */
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+  background: linear-gradient(to right, var(--gold), var(--gold-light));
+  z-index: 200; transform-origin: left;
+  box-shadow: 0 0 8px rgba(201,168,76,0.6);
+}
+.chapter-indicator {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 0.5rem; z-index: 200;
+}
+.indicator-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(245,241,232,0.3);
+  border: 1.5px solid rgba(245,241,232,0.4);
+  transition: all 0.4s ease;
+}
+.indicator-dot.active {
+  background: var(--gold-light); border-color: var(--gold-light);
+  box-shadow: 0 0 8px rgba(240,201,106,0.7);
+  transform: scale(1.3);
+}
+
+/* Ending */
+.ending-screen {
+  position: fixed; inset: 0; background: #000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; z-index: 300;
+}
+.ending-text { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem,3vw,2rem); color: var(--cream); text-align: center; font-style: italic; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .book-spread {
+    flex-direction: column;
+    width: min(380px, 95vw);
+    height: auto;
+    min-height: 85vh;
+  }
+  .page-left-static { width: 100%; height: 45%; border-radius: 8px 8px 0 0; }
+  .right-page-wrapper { width: 100%; height: 55%; }
+  .journal-page { transform-origin: top center; }
+  .txt-title { font-size: 1rem; }
+  .txt-message { font-size: 0.72rem; }
+  .cover-container { width: min(340px, 92vw); }
+  .end-container { width: min(340px, 92vw); }
+  .page-edges { display: none; }
+}
