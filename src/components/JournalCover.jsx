@@ -1,85 +1,55 @@
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
+import coverImg from '../assets/images/cover.png';
 
 export default function JournalCover() {
   return (
-    <div className="cover-container">
+    <div style={{ width: '100%', height: '100%' }}>
       <motion.div
-        className="cover-page"
         initial={{ scale: 0.85, opacity: 0, rotateY: -15 }}
         animate={{ scale: 1, opacity: 1, rotateY: 0 }}
         transition={{ duration: 1.1, type: 'spring', bounce: 0.25 }}
+        style={{
+          width: '100%',
+          height: '100%',
+          padding: 0,
+          overflow: 'hidden',
+          position: 'relative',
+          borderRadius: '4px 16px 16px 4px',
+          boxShadow: '-8px 0 20px rgba(0,0,0,0.6), 8px 4px 40px rgba(0,0,0,0.5)',
+        }}
       >
-        <div className="leather-texture" />
+        <img
+          src={coverImg}
+          alt="Front Cover"
+          className="cover-img"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            display: 'block',
+          }}
+        />
 
-        {/* Compass */}
+        {/* Scroll hint overlay */}
         <motion.div
-          className="cover-compass"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-        >
-          🧭
-        </motion.div>
-
-        <div className="cover-divider" />
-
-        <motion.p
-          className="cover-title-small"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          A Travel Journal for
-        </motion.p>
-
-        <motion.h1
-          className="cover-title-main"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.65 }}
-        >
-          Your Year Will<br />Look Like This…
-        </motion.h1>
-
-        <div className="cover-divider" />
-
-        {/* Mountain sketch using SVG */}
-        <motion.svg
-          className="cover-mountain-sketch"
-          viewBox="0 0 300 100"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.35 }}
-          transition={{ delay: 0.9 }}
-        >
-          <polyline
-            points="0,100 60,30 100,60 150,10 200,55 240,25 300,100"
-            stroke="#C9A84C"
-            strokeWidth="2"
-            fill="none"
-          />
-          <line x1="0" y1="100" x2="300" y2="100" stroke="#C9A84C" strokeWidth="1.5" />
-        </motion.svg>
-
-        <motion.p
-          className="cover-subtitle"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1 }}
-        >
-          Scroll to turn pages & begin your journey
-        </motion.p>
-
-        <motion.div
-          className="cover-scroll-hint"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4 }}
+          style={{
+            position: 'absolute',
+            bottom: '2rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            animation: 'bounce-hint 2s ease-in-out infinite',
+          }}
         >
-          <span>📖 Scroll down</span>
-          <span>▼</span>
+          <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', fontFamily: 'Caveat, cursive', letterSpacing: '0.05em' }}>Scroll down to open</span>
+          <span style={{ color: 'rgba(255,255,255,0.8)', marginTop: '0.2rem' }}>▼</span>
         </motion.div>
       </motion.div>
     </div>

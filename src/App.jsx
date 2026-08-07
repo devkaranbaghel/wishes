@@ -14,7 +14,7 @@ import img2 from './assets/images/chapter2.jpg';
 import img3 from './assets/images/chapter3.jpg';
 import img4 from './assets/images/chapter4.jpg';
 import img5 from './assets/images/chapter5.jpg';
-import imgEnd from './assets/images/endpage.jpg';
+import imgEnd from './assets/images/endpage.png';
 
 // ── Chapter Data ──────────────────────────────────────────────────────────────
 const CHAPTERS = [
@@ -95,7 +95,7 @@ function ChaptersContainer() {
   return (
     <section
       ref={containerRef}
-      style={{ height: `calc(${JOURNAL_PAGES.length * 350}vh + 100vh)`, position: 'relative' }}
+      style={{ height: `calc(${JOURNAL_PAGES.length * 120}vh + 100vh)`, position: 'relative' }}
       id="chapters-container"
     >
       {/* Invisible markers for scroll progress detection (dots) */}
@@ -105,8 +105,8 @@ function ChaptersContainer() {
           className="scroll-section-marker"
           style={{
             position: 'absolute',
-            top: `${i * 350}vh`,
-            height: '350vh',
+            top: `${i * 120}vh`,
+            height: '120vh',
             width: '10px',
             pointerEvents: 'none'
           }}
@@ -119,7 +119,7 @@ function ChaptersContainer() {
         className="scroll-section-marker"
         style={{
           position: 'absolute',
-          top: `${JOURNAL_PAGES.length * 350}vh`,
+          top: `${JOURNAL_PAGES.length * 120}vh`,
           height: '10px',
           width: '10px',
           pointerEvents: 'none'
@@ -134,17 +134,14 @@ function ChaptersContainer() {
           <div className="book-spread" style={{ background: 'transparent', filter: 'drop-shadow(0 30px 55px rgba(0,0,0,0.75))' }}>
             {/* Book spine center shadow strip */}
             <div className="book-spine" />
-            
             {/* Left page: End Page content */}
-            <div className="page-left-static" style={{ background: '#F5F1E8' }}>
+            <div className="page-left-static" style={{ background: 'transparent' }}>
               <EndPage />
             </div>
             
-            {/* Right page: Back Cover */}
+            {/* Right page: Empty */}
             <div className="right-page-wrapper" style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, #3d2814 0%, #5c3d1e 30%, #4a2e14 60%, #2d1a08 100%)', borderRadius: '0 8px 8px 0' }}>
-                <div className="leather-texture" />
-              </div>
+              <div style={{ position: 'absolute', inset: 0, background: 'transparent' }} />
             </div>
           </div>
         </div>
@@ -172,8 +169,8 @@ function MappedChapter({ chapter, index, total, globalProgress }) {
   // Local progress goes 0->1 only during this chapter's slice
   const localProgress = useTransform(globalProgress, [start, end], [0, 1]);
   
-  // Feature: if page turned more than 50% (0.525 is exactly 90deg), auto-complete the turn to 1.
-  const snappedProgress = useTransform(localProgress, (v) => v > 0.525 ? 1 : v);
+  // Feature: if page turned more than 40% (0.45), auto-complete the turn to 1.
+  const snappedProgress = useTransform(localProgress, (v) => v > 0.45 ? 1 : v);
   
   const nextChapter = index < total - 1 ? JOURNAL_PAGES[index + 1] : null;
 

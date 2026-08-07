@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import endpageImg from '../assets/images/endpage.jpg';
+import endpageImg from '../assets/images/endpage.png';
 
 const FIREFLIES = Array.from({ length: 12 }, (_, i) => ({
   id: i,
@@ -26,6 +26,7 @@ export default function EndPage({ interactive = true }) {
   };
 
   return (
+    
     <>
       {/* Fireflies */}
       {FIREFLIES.map((f) => (
@@ -47,72 +48,20 @@ export default function EndPage({ interactive = true }) {
         />
       ))}
 
-      <AnimatePresence>
-        {!closing && (
-          <motion.div
-            className="end-container"
-            key="endpage"
-            initial={{ scale: 0.88, opacity: 0, rotateY: -8 }}
-            animate={{ scale: 1, opacity: 1, rotateY: 0 }}
-            exit={{ scale: 0.9, opacity: 0, rotateY: 10 }}
-            transition={{ duration: 0.9, type: 'spring', bounce: 0.2 }}
-          >
-            <div className="end-page">
-              <motion.img
-                src={endpageImg}
-                alt="Mountain viewpoint - arms open to the sky"
-                className="end-image-full"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.5, ease: 'easeOut' }}
-              />
+      <div className="end-container" style={{ width: '100%', height: '100%' }}>
+        <div className="end-page" style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <img
+            src={endpageImg}
+            alt="End of journey"
+            className="end-image-full"
+            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+          />
 
-              {/* Stars over image */}
-              <motion.div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'radial-gradient(ellipse at 50% 0%, rgba(100,60,180,0.25) 0%, transparent 60%)',
-                  pointerEvents: 'none',
-                }}
-                animate={{ opacity: [0.4, 0.9, 0.4] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              />
+          <div className="end-content">
+            {/* Text overlay removed as the new image has baked-in text */}
 
-              <div className="end-overlay" />
-
-              <div className="end-content">
-                <motion.p
-                  className="end-quote"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                >
-                  "Life isn't measured by the miles you travel…<br />
-                  but by the memories you bring back."
-                </motion.p>
-
-                <motion.h2
-                  className="end-birthday"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.75, duration: 0.8 }}
-                >
-                  Happy Birthday, Sheetal ❤️
-                </motion.h2>
-
-                <motion.p
-                  className="end-message"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.8 }}
-                >
-                  May this year take you to places you've always dreamed of, bring unforgettable memories,
-                  help you achieve your goals, and give you countless reasons to smile.
-                </motion.p>
-
-                {interactive && (
-                  <motion.button
+            {interactive && (
+              <motion.button
                     id="end-journey-btn"
                     className="end-button"
                     onClick={handleClose}
@@ -127,9 +76,7 @@ export default function EndPage({ interactive = true }) {
                 )}
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
 
       {/* Ending screen */}
       <AnimatePresence>

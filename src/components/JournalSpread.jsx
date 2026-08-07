@@ -1,5 +1,6 @@
 import { motion, useTransform, useSpring } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import endpageImg from '../assets/images/endpage.png';
 
 /**
  * BookSpread
@@ -122,10 +123,8 @@ export default function BookSpread({ scrollYProgress, currentChapter, nextChapte
               // When cover lifts, you see Chapter 1 Right underneath!
               <img src={nextChapter.image} alt="" style={{ position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%', objectFit: 'cover', objectPosition: 'right center' }} />
             ) : !nextChapter ? (
-              // Last chapter flipping - reveal the Back Cover
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, #3d2814 0%, #5c3d1e 30%, #4a2e14 60%, #2d1a08 100%)', borderRadius: '0 8px 8px 0' }}>
-                <div className="leather-texture" />
-              </div>
+              // Last chapter flipping - reveal empty right side
+              <div style={{ position: 'absolute', inset: 0, background: 'transparent' }} />
             ) : (
               // Normal chapter right side
               <img src={currentChapter.image} alt="" style={{ position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%', objectFit: 'cover', objectPosition: 'right center' }} />
@@ -189,7 +188,7 @@ export default function BookSpread({ scrollYProgress, currentChapter, nextChapte
                   </>
                 ) : (
                   /* Last chapter flips to reveal End Page */
-                  <div style={{ position: 'absolute', inset: 0, background: '#F5F1E8' }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'transparent' }}>
                     <EndPage interactive={false} />
                   </div>
                 )}
