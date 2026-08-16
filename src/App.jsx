@@ -22,9 +22,9 @@ const CHAPTERS = [
     id: 'ch1',
     image: img1,
     chapterNum: 'Chapter  01',
-    title: 'Every Road Begins Somewhere',
+    title: 'The Road You Always Planned',
     message:
-      'The open road stretched ahead, and she rode toward the mountains with nothing but a full tank, a light heart, and the whole world waiting.',
+      'May the trip you’ve been planning finally become the road you travel this year, and may every destination leave you with a new memory, a new perspective, and a story worth keeping.',
     note: '— The days that become stories you tell forever 🏔️',
     symbol: '🏍️',
   },
@@ -32,9 +32,9 @@ const CHAPTERS = [
     id: 'ch2',
     image: img2,
     chapterNum: 'Chapter  02',
-    title: 'Mountains Reward the Adventurous',
+    title: 'Through the Lens of Adventure',
     message:
-      'She parked at the viewpoint, raised her DSLR, and let the mountains fill the frame. May every peak reward you with a view worth capturing.',
+      'May you finally get that professional camera and capture everything that makes the journey beautiful mountains, waterfalls, jungles, and, of course, a few beautiful pictures of yourself along the way.',
     note: '— Stop often. The best moments aren\'t at the destination 📷',
     symbol: '⛰️',
   },
@@ -44,7 +44,7 @@ const CHAPTERS = [
     chapterNum: 'Chapter  03',
     title: 'The Climb That Changes You',
     message:
-      'Deeper into the mountains she went — trail rising beneath her boots, peaks sharp against the sky. Growth happens just beyond comfort.',
+      'May you keep climbing higher, not just on the mountains, but in life too. May every peak you reach remind you how far you’ve come and how much higher you can still go.',
     note: '— The rugged paths lead to the most breathtaking views 🌄',
     symbol: '🎒',
   },
@@ -54,7 +54,7 @@ const CHAPTERS = [
     chapterNum: 'Chapter  04',
     title: 'The Ocean Knows How to Rest',
     message:
-      'After every climb comes a shore. She sat by the ocean as the sun melted into the sea. May you always find your ocean after every mountain.',
+      'I wish you days by the beach, your feet in the sand and waves around you, finding the kind of calm that only the ocean can bring, and carrying a little of its peace and rhythm within you.',
     note: '— Sit still. Let the waves wash over you 🌊',
     symbol: '🌅',
   },
@@ -64,7 +64,7 @@ const CHAPTERS = [
     chapterNum: 'Chapter  05',
     title: 'Campfire Stories Under the Stars',
     message:
-      'The tent glowed orange, the fire crackled, and her Royal Enfield stood guard. She cooked a simple meal that tasted like freedom.',
+      'May your journeys end beneath a sky full of stars, beside a beautiful campsite, with a warm fire and the freedom to simply stop and breathe (if possible then in your ₹80 lakh camper van. 😊)',
     note: '— The best table is beside a fire under a sky full of stars 🔥',
     symbol: '⛺',
     bucketList: [

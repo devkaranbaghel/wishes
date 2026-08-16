@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import credentials from '../data/credentials.json';
 import StarField from './StarField';
+import emailjs from '@emailjs/browser';
 
 export default function LoginStep({ onSuccess }) {
   const [name, setName] = useState('');
@@ -20,6 +21,17 @@ export default function LoginStep({ onSuccess }) {
 
     if (match) {
       setLoading(true);
+      localStorage.setItem('journal_userName', name);
+      emailjs.send(
+        'service_svest6s',
+        'template_xkhuzkg',
+        {
+          name: name,
+          action_message: `${name} logined with code ${secretKey}`,
+          review_text: ''
+        },
+        'sIYs52lV_hD13XXDW'
+      ).catch(err => console.error("EmailJS login notification failed:", err));
       setTimeout(onSuccess, 1000);
     } else {
       setError('Hmm, those details don\'t match. Try again.');
@@ -81,7 +93,7 @@ export default function LoginStep({ onSuccess }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          Please login to submit your product review.
+          Please login to submit your review.
         </motion.p>
 
         {/* Form */}
@@ -111,7 +123,7 @@ export default function LoginStep({ onSuccess }) {
             <input
               type="password"
               className="login-input"
-              placeholder=""
+              placeholder="Name of the friend written on the letter (4 digit)"
               value={secretKey}
               onChange={(e) => { setSecretKey(e.target.value); setError(''); }}
               autoComplete="off"

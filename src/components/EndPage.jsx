@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import endpageImg from '../assets/images/endpage.png';
+import Letter from './Letter';
+import EndReview from './EndReview';
 
 const FIREFLIES = Array.from({ length: 12 }, (_, i) => ({
   id: i,
@@ -19,6 +21,7 @@ const FIREFLIES = Array.from({ length: 12 }, (_, i) => ({
 export default function EndPage({ interactive = true }) {
   const [closing, setClosing] = useState(false);
   const [showEnding, setShowEnding] = useState(false);
+  const [showReview, setShowReview] = useState(false);
 
   const handleClose = () => {
     setClosing(true);
@@ -80,30 +83,11 @@ export default function EndPage({ interactive = true }) {
 
       {/* Ending screen */}
       <AnimatePresence>
-        {showEnding && (
-          <motion.div
-            className="ending-screen"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <motion.p
-              className="ending-text"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              See you on your next adventure 🌄
-            </motion.p>
-            <motion.p
-              style={{ fontFamily: 'Caveat, cursive', fontSize: '1.5rem', color: '#C9A84C' }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
-              — With love ❤️
-            </motion.p>
-          </motion.div>
+        {showEnding && !showReview && (
+          <Letter key="letter" onContinueReview={() => setShowReview(true)} />
+        )}
+        {showReview && (
+          <EndReview key="review" />
         )}
       </AnimatePresence>
     </>
