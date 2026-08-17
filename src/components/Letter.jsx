@@ -1,6 +1,33 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 export default function Letter({ onContinueReview }) {
+  const [chocolateLoading, setChocolateLoading] = useState(false);
+  const [chocolateSent, setChocolateSent] = useState(false);
+
+  const handleChocolateRequest = () => {
+    setChocolateLoading(true);
+    const userName = localStorage.getItem('journal_userName') || 'Guest User';
+    
+    emailjs.send(
+      'service_svest6s',
+      'template_xkhuzkg',
+      {
+        name: userName,
+        action_message: `${userName} has requested a real chocolate! 🍫`,
+        review_text: ''
+      },
+      'sIYs52lV_hD13XXDW'
+    ).then(() => {
+      setChocolateSent(true);
+      setChocolateLoading(false);
+    }).catch(err => {
+      console.error("EmailJS error:", err);
+      setChocolateSent(true);
+      setChocolateLoading(false);
+    });
+  };
   return (
     <motion.div 
       className="letter-wrapper"
@@ -18,9 +45,14 @@ export default function Letter({ onContinueReview }) {
         overflow: 'hidden',
         color: '#4a3b32',
         fontFamily: 'Lato, sans-serif',
-        zIndex: 50
+        zIndex: 50,
+        pointerEvents: 'auto'
       }}
     >
+      {/* Bottom left hint */}
+      <div style={{ position: 'absolute', bottom: '15px', left: '15px', fontSize: '0.75rem', color: '#8b5a2b', opacity: 0.7, zIndex: 10 }}>
+        * Please use desktop for the best experience. Scroll to navigate.
+      </div>
       {/* Abstract Shapes (SVGs) */}
       <svg style={{ position: 'absolute', top: '-15%', left: '-10%', width: '50%', opacity: 0.6 }} viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <path fill="#d2bba0" d="M42.7,-73.4C55.9,-66.3,67.6,-54.6,76.5,-41.2C85.4,-27.8,91.4,-12.7,89.5,1.7C87.5,16.2,77.5,29.9,67.3,42.7C57.1,55.5,46.7,67.4,33.5,74.7C20.4,81.9,4.4,84.5,-10.8,81.9C-25.9,79.3,-40.2,71.5,-52.1,61C-64,50.4,-73.6,37.1,-80.1,22.1C-86.6,7.1,-90,-9.7,-85.7,-24.5C-81.5,-39.3,-69.6,-52,-55.8,-59.8C-42.1,-67.6,-26.6,-70.6,-11.9,-73C2.8,-75.4,17.4,-77.3,29.6,-80.4L42.7,-73.4Z" transform="translate(100 100)" />
@@ -48,6 +80,9 @@ export default function Letter({ onContinueReview }) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.8 }}
         className="letter-paper" 
+        data-lenis-prevent="true"
+        onWheelCapture={(e) => e.stopPropagation()}
+        onTouchMoveCapture={(e) => e.stopPropagation()}
         style={{
           position: 'relative',
           zIndex: 10,
@@ -78,13 +113,38 @@ export default function Letter({ onContinueReview }) {
           clipPath: 'polygon(5% 0%, 95% 0%, 100% 10%, 98% 90%, 90% 100%, 10% 98%, 0% 90%, 2% 10%)'
         }}></div>
 
-        <p style={{ marginTop: '0.5rem' }}>I hope you liked this little surprise, and that it became a small reason to make you smile on your special day. 😊</p>
-        <p>This is just a little ending note to wrap everything up. I hope you also liked the things inside the box. There are a few tiny mistakes here and there because, honestly, I’m not not good in making art and craft 😅, that you are able to see now.</p>
-        <p>And you might be wondering why there are two gifts. First one (the earrings) was actually my sister’s suggestion for gift. I picked them up with her when I was at home during year break, and the second one is a little birthday gift from me.</p>
-        <p>I hope you’ll keep them, especially since you once told me that you’d keep a gift when I asked you about it.</p>
-        <p>If this whole thing managed to put even a small smile on your face, then it has already served its purpose.</p>
-        <p>Once again, <strong>Happy Birthday! 🎂✨</strong></p>
-        <p>I hope this year brings you plenty of good memories, beautiful places, unexpected adventures, and lots of reasons to smile.</p>
+        <p style={{ marginTop: '0.5rem' }}>I hope tumko ye gift acha laga hoga, including the gift inside the box 🎁 (hope hi kar sakta hu because I am not that much good at selecting gifts 😅), and it became a small reason to make you smile on your special day. 😊</p>
+        <p>These are some mistakes here and there because, honestly, main art and craft mein utna acha nahi hu. Ye mera more or less first try tha 😅</p>
+        <p>And you can have one more question: why are 2 things present in the box? Actually, wo first wala maine didi ke sath bahar gaya tha, to unke suggestion par liya tha (but unhone bas help ki thi select karne mein). If you remember, maine tumse pucha tha 18th July ko. And second is completely my suggestion. :)</p>
+        <p>And agar wo smile wali baat sahi hui hai, then it has already served its purpose. ✨</p>
+        <p>And keep smiling, tumhare face par suits karta hai (you can consider this as flirting, bas reason mat puchna 😌).</p>
+        <p>Once again, <strong>many many returns of the day! 🎂✨</strong> And I hope this year brings you lots of reasons to smile and good memories.</p>
+
+        <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem', padding: '1rem', backgroundColor: 'rgba(139,90,43,0.05)', borderRadius: '8px', border: '1px dashed rgba(139,90,43,0.3)' }}>
+          <p style={{ margin: 0, fontSize: '0.9rem', fontStyle: 'italic' }}>
+            PS: I forgot to put chocolate in the box so for now keep this virtual one 🍫. You can order a real one by clicking this:
+            <button 
+              onClick={handleChocolateRequest}
+              disabled={chocolateSent || chocolateLoading}
+              style={{
+                display: 'inline-block',
+                marginLeft: '8px',
+                marginTop: '8px',
+                padding: '6px 14px',
+                backgroundColor: chocolateSent ? '#a0948c' : '#8b5a2b',
+                color: 'white',
+                border: 'none',
+                borderRadius: '15px',
+                cursor: chocolateSent ? 'default' : 'pointer',
+                fontFamily: 'Lato, sans-serif',
+                fontSize: '0.85rem',
+                boxShadow: chocolateSent ? 'none' : '0 2px 5px rgba(0,0,0,0.1)'
+              }}
+            >
+              {chocolateLoading ? 'Sending...' : chocolateSent ? 'Ordered! 🎉' : 'Order Real 🍫'}
+            </button>
+          </p>
+        </div>
 
         <div style={{ textAlign: 'center', marginTop: '2.5rem', marginBottom: '1rem' }}>
           <motion.button 

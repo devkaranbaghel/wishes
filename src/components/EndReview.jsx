@@ -78,6 +78,14 @@ export default function EndReview() {
         >
           Your review has been successfully submitted. 😊
         </motion.p>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ delay: 0.8 }}
+          style={{ marginTop: '0.5rem', color: '#aaa', fontSize: '0.9rem' }}
+        >
+          You will be contacted soon based on your review.
+        </motion.p>
       </motion.div>
     );
   }
