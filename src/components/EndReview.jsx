@@ -86,6 +86,24 @@ export default function EndReview() {
         >
           You will be contacted soon based on your review.
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 1.5, type: 'spring', bounce: 0.6, duration: 1 }}
+          style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        >
+          <motion.span 
+            animate={{ rotate: [-5, 5, -5] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            style={{ fontSize: '5rem', display: 'inline-block' }}
+          >
+            💐
+          </motion.span>
+          <p style={{ marginTop: '0.5rem', color: '#ffb6b9', fontFamily: 'Caveat, cursive, Lato, sans-serif', fontSize: '1.4rem' }}>
+            Here are some flowers for you
+          </p>
+        </motion.div>
       </motion.div>
     );
   }
